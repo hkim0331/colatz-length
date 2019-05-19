@@ -19,5 +19,3 @@ colatz-range: colatz-range.rkt
 
 clean:
 	${RM} *~ colatz-range
-
-
