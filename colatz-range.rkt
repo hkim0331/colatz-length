@@ -3,7 +3,7 @@
 
 (require db racket/system (planet dmac/spin))
 
-(define VERSION "0.3")
+(define VERSION "0.3.1")
 
 ;;CHANGE
 (define DB 
