@@ -153,5 +153,5 @@ programmed by hkimura, 2019-05-15, 2019-05-19.
             (lambda ()
               (display (format "<pre>~a</pre>" (vector-ref ans 6)))))))))
 
-(displayln "server starts at port 8000")
-(run #:listen-ip #f #:port 8000)
+(displayln "server starts at port 8002")
+(run #:listen-ip #f #:port 8002)

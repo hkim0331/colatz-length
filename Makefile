@@ -1,8 +1,8 @@
 DEST=/srv/colatz-hkim
-DB=colatz-range.db
+DB=colatz.db
 
 run:
-	racket colatz-range.rkt
+	racket colatz-length.rkt
 
 create:
 	sqlite3 ${DB} < create.sql
@@ -11,11 +11,12 @@ create:
 init:
 	install -m 0644 ${DB} ${DEST}/
 
-install: colatz-range
+install: colatz-length.rkt
 	install -m 0755 $^ ${DEST}/
+	racket ${DEST}/colatz-length.rkt
 
-colatz-range: colatz-range.rkt
-	raco exec $^
+#colatz-range: colatz-range.rkt
+#	raco exe $^
 
 clean:
 	${RM} *~ colatz-range
