@@ -1,16 +1,35 @@
 #!/usr/bin/env racket
 #lang racket
 
-(require db (planet dmac/spin))
+(require db racket/system (planet dmac/spin))
 
-(define VERSION "0.1")
+(define VERSION "0.2")
 
-(define db (sqlite3-connect #:database "colatz-range.db"))
+;;CHANGE
+(define DB "/Users/hkim/ramdisk/colatz-range-ranks/colatz-range.db")
+
+(define db (sqlite3-connect #:database DB))
 
 (define (auth? user password)
-  (query-maybe-value 
+  (query-maybe-value
     db
     "select id from users where user=$1 and password=$2" user password))
+
+(define (insert user answer msec)
+  (query-exec
+    db
+    "insert into answers (user, answer, msec) values ($1, $2, $3)"
+    user answer msec))
+
+(define (answers)
+  (query-rows
+    db
+    "select * from answers where subj='colatz-range' and stat='1' order by msec"))
+
+(define (answer id)
+  (query-row
+   db
+   "select * from answers where id=$1" id))
 
 (define header
   "<!doctype html>
@@ -30,7 +49,7 @@
 
 (define footer
   "<hr>
-programmed by hkimura, 2019-05-15. 途中から miyakawa.
+programmed by hkimura, 2019-05-15, 2019-05-19.
 </div></html>")
 
 (define html
@@ -42,38 +61,87 @@ programmed by hkimura, 2019-05-15. 途中から miyakawa.
 
 (define (error msg)
   (format
-   "<p style='color:red;'>~a</p><p><a href='/upload'>やり直し</a></p>"
-   msg))
+    "<p style='color:red;'>~a</p><p><a href='/upload'>やり直す</a></p>"
+    msg))
 
+;; return msec or #f
+(define (save s)
+  (let ((fname "/tmp/colatz.rkt"))
+    (with-output-to-file fname
+      (lambda ()
+        (displayln s)))
+    fname))
+
+(define (try answer)
+  (let* ((fname (save answer))
+         (s (with-output-to-string
+             (lambda ()
+               (system (format "time racket ~a" fname))))))
+        (system (format "rm -f ~a" fname))
+        s))
+
+;;FIXME データベースから解答をリストする
+(define-syntax-rule (inc n)
+  (let ()
+    (set! n (+ 1 n))
+    n))
 (get "/"
   (lambda (req)
     (html
-      "hello")))
+     (with-output-to-string
+       (lambda ()
+         (let ((num 0))
+           (displayln "<table>")
+           (displayln "<tr><td></td><td>user</td><td>msec</td><td>upload</td>")
+           (for ([ans (answers)])
+             (displayln
+              (format
+               "<tr><td>~a</td><td>~a</td><td>~a</td><td><a href='/show/~a'>~a</a></td>"
+               (inc num)
+               (vector-ref ans 3)
+               (vector-ref ans 4)
+               (vector-ref ans 0)
+               (vector-ref ans 5))))
+           (displayln "</table>")
+           (displayln "new answer? <a href='/upload'>upload</a>")))))))
 
 (get "/upload"
   (lambda (req)
     (html
       (with-output-to-string
         (lambda ()
-          (displayln "<form method='post' action='/exec'>")
+          (displayln "<form method='post' action='/submit'>")
           (displayln "<p>name <input name='user'></p>")
           (displayln "<p>password <input name='password' type='password'></p>")
-          (displayln "<p>your answer:<br><textarea name='answer' rows='10' cols='40'>")
+          (displayln "<p>your answer:関数を colayz-range として定義し、<br>")
+          (displayln "最後に (time (argmax ...) の計測プログラムを入れてください。</p>")
+          (displayln "<textarea name='answer' rows='10' cols='40'>")
+          (displayln "(time (argmax first (colatz-range (range 1 1000000))))")
           (displayln "</textarea></p>")
           (displayln "<p><input type='submit'></p>")
           (displayln "</form>"))))))
 
-(post "/exec"
+(post "/submit"
   (lambda (req)
     (html
       (if (not (auth? (params req 'user) (params req 'password)))
         (error "username or password is bad.")
-        (let ((user (params req 'user))
-              (answer (params req 'answer)))
-          ;; FIXME
-          ;; 解答チェックして、OKならばデータベースに入れる。
-          (format "~a ~a" user answer)))
-      )))
+        (let* ((user (params req 'user))
+               (answer (params req 'answer))
+               (msec (try answer)))
+          (if msec
+            (begin
+            (insert user answer msec)
+            (format "<p>thank you. see the <a href='/'>results</a>.</p>"))
+            (error "check your answer")))))))
+
+(get "/show/:id"
+     (lambda (req)
+       (let ((ans (answer (params req 'id))))
+         (html
+          (with-output-to-string
+            (lambda ()
+              (display (format "<pre>~a</pre>" (vector-ref ans 6)))))))))
 
 (displayln "server starts at port 8000")
 (run #:listen-ip "127.0.0.1" #:port 8000)

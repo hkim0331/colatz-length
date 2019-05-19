@@ -1,4 +1,6 @@
-# colatz-range
+# UNDER CONSTRUCTION
+
+## colatz-range
 
 * コラッツ列の問題解答を（実行時間で）ランキングする。
 * dmac/spin で書く web app を学ぶ。

@@ -1,3 +1,11 @@
+* [0.2] 2019-05-19 time to move linux
+  start to work on macos.
+    * can upload answers.
+    * can launch answers.
+    * can retrieve 'time' outputs.
+  output format may differ from macos to linux.
+  time to move linux.
+
 * [0.1] 2019-05-19 restart developing
     * https://github.com/hkim0331/colatz-range-ranks.git
 
