@@ -2,7 +2,7 @@ DEST=/srv/colatz-hkim
 DB=colatz.db
 
 run:
-	racket colatz-length.rkt
+	racket colatz.rkt
 
 create:
 	sqlite3 ${DB} < create.sql
