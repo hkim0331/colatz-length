@@ -3,16 +3,16 @@
 
 (require db racket/system (planet dmac/spin))
 
-(define VERSION "0.3.3")
+(define VERSION "0.3.4")
 
 ;;CHANGE
-(define DB 
-  (first 
-    (filter 
-      file-exists? 
-      '("/Users/hkim/ramdisk/colatz-range-ranks/colatz-range.db"
-        "/home/hkim/ramdisk/colatz-range-ranks/colatz-range.db"
-        "/opt/colatz-range-ranks/colatz-range.db"))))
+(define DB
+  (first
+    (filter
+      file-exists?
+      '("/Users/hkim/ramdisk/colatz-length/colatz.db"
+        "/home/hkim/ramdisk/colatz-length/colatz.db"
+        "/srv/colatz-hkim/colatz.db"))))
 
 (define db (sqlite3-connect #:database DB))
 

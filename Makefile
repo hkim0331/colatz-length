@@ -1,7 +1,7 @@
 DEST=/srv/colatz-hkim
 DB=colatz.db
 
-run:
+debug:
 	racket colatz.rkt
 
 create:
@@ -11,12 +11,12 @@ create:
 init:
 	install -m 0644 ${DB} ${DEST}/
 
-install: colatz-length.rkt
+install: colatz.rkt
 	install -m 0755 $^ ${DEST}/
-	racket ${DEST}/colatz-length.rkt
+	sed -i.bak "s|href='|href='/ch|g" ${DEST}/colatz.rkt
 
-#colatz-range: colatz-range.rkt
-#	raco exe $^
+run: install
+	racket ${DEST}/colatz.rkt
 
 clean:
 	${RM} *~ *.bak
