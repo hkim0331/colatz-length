@@ -13,7 +13,8 @@ init:
 
 install: colatz.rkt
 	install -m 0755 $^ ${DEST}/
-	sed -i.bak "s|href='|href='/ch|g" ${DEST}/colatz.rkt
+	sed -i.bak -e "s|href='/|href='/ch/|g" \
+		"s|action='/|action='/ch/|g" ${DEST}/colatz.rkt
 
 run: install
 	racket ${DEST}/colatz.rkt
