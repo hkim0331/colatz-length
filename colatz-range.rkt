@@ -65,7 +65,9 @@ programmed by hkimura, 2019-05-15, 2019-05-19.
     msg))
 
 ;; return msec or #f
-;;
+(define (save s)
+  #t)
+
 (define (try answer)
   (with-output-to-string
     (lambda ()
@@ -105,7 +107,10 @@ programmed by hkimura, 2019-05-15, 2019-05-19.
           (displayln "<form method='post' action='/submit'>")
           (displayln "<p>name <input name='user'></p>")
           (displayln "<p>password <input name='password' type='password'></p>")
-          (displayln "<p>your answer:<br><textarea name='answer' rows='10' cols='40'>")
+          (displayln "<p>your answer:関数を colayz-range として定義し、<br>")
+          (displayln "最後に (time (argmax ...) の計測プログラムを入れてください。</p>")
+          (displayln "<textarea name='answer' rows='10' cols='40'>")
+          (displayln "(time (argmax first (colatz-range (range 1 1000000))))")
           (displayln "</textarea></p>")
           (displayln "<p><input type='submit'></p>")
           (displayln "</form>"))))))
