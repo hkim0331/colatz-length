@@ -3,10 +3,16 @@
 
 (require db racket/system (planet dmac/spin))
 
-(define VERSION "0.2")
+(define VERSION "0.3")
 
 ;;CHANGE
-(define DB "/Users/hkim/ramdisk/colatz-range-ranks/colatz-range.db")
+(define DB 
+  (first 
+    (filter 
+      file-exists? 
+      '("/Users/hkim/ramdisk/colatz-range-ranks/colatz-range.db"
+        "/home/hkim/ramdisk/colatz-range-ranks/colatz-range.db"
+        "/opt/colatz-range-ranks/colatz-range.db"))))
 
 (define db (sqlite3-connect #:database DB))
 
@@ -64,7 +70,6 @@ programmed by hkimura, 2019-05-15, 2019-05-19.
     "<p style='color:red;'>~a</p><p><a href='/upload'>やり直す</a></p>"
     msg))
 
-;; return msec or #f
 (define (save s)
   (let ((fname "/tmp/colatz.rkt"))
     (with-output-to-file fname
@@ -72,19 +77,24 @@ programmed by hkimura, 2019-05-15, 2019-05-19.
         (displayln s)))
     fname))
 
+(define (msec s)
+  (third (string-split s)))
+
+;;FIXME: must return #f if error
 (define (try answer)
   (let* ((fname (save answer))
          (s (with-output-to-string
              (lambda ()
-               (system (format "time racket ~a" fname))))))
+               (system (format "racket ~a" fname))))))
         (system (format "rm -f ~a" fname))
-        s))
+        (msec s)))
 
-;;FIXME データベースから解答をリストする
+;; list answers
 (define-syntax-rule (inc n)
   (let ()
     (set! n (+ 1 n))
     n))
+
 (get "/"
   (lambda (req)
     (html
@@ -144,4 +154,4 @@ programmed by hkimura, 2019-05-15, 2019-05-19.
               (display (format "<pre>~a</pre>" (vector-ref ans 6)))))))))
 
 (displayln "server starts at port 8000")
-(run #:listen-ip "127.0.0.1" #:port 8000)
+(run #:listen-ip #f #:port 8000)
