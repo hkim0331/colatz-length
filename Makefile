@@ -13,12 +13,10 @@ init:
 
 install: colatz.rkt
 	install -m 0755 $^ ${DEST}/
+	sed -i.bak "s|href='|href='/ch|g" ${DEST}/colatz.rkt
 
 run: install
 	racket ${DEST}/colatz.rkt
-
-#colatz-range: colatz-range.rkt
-#	raco exe $^
 
 clean:
 	${RM} *~ *.bak
