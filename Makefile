@@ -1,4 +1,4 @@
-DEST=/srv/colatz-range
+DEST=/srv/colatz-hkim
 DB=colatz-range.db
 
 run:
@@ -11,7 +11,7 @@ create:
 init:
 	install -m 0644 ${DB} ${DEST}/
 
-install: sleedy
+install: colatz-range
 	install -m 0755 $^ ${DEST}/
 
 colatz-range: colatz-range.rkt
@@ -19,5 +19,3 @@ colatz-range: colatz-range.rkt
 
 clean:
 	${RM} *~ colatz-range
-
-
