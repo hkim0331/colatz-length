@@ -56,6 +56,7 @@
 (define footer
   "<hr>
 programmed by hkimura, 2019-05-15, 2019-05-19.
+<a href='https://github.com/hkim0331/colatz-length.git'>github</a>
 </div></html>")
 
 (define html
@@ -101,19 +102,21 @@ programmed by hkimura, 2019-05-15, 2019-05-19.
      (with-output-to-string
        (lambda ()
          (let ((num 0))
-           (displayln "<table>")
+           (displayln "<div class='table-responsive")
+           (displayln "<table class='table table-striped'>")
            (displayln "<tr><td></td><td>user</td><td>msec</td><td>upload</td>")
            (for ([ans (answers)])
              (displayln
               (format
-               "<tr><td>~a</td><td>~a</td><td>~a</td><td><a href='/show/~a'>~a</a></td>"
+               "<tr><td>~a</td><td>~a</td><td stlye='width:6em; text-align:right'>~a</td><td><a href='/show/~a'>~a</a></td>"
                (inc num)
                (vector-ref ans 3)
                (vector-ref ans 4)
                (vector-ref ans 0)
                (vector-ref ans 5))))
            (displayln "</table>")
-           (displayln "new answer? <a href='/upload'>upload</a>")))))))
+           (displayln "</div>")
+           (displayln "new answer? <a href='/upload' class='btn btn-primary'>upload</a>")))))))
 
 (get "/upload"
   (lambda (req)
@@ -128,7 +131,7 @@ programmed by hkimura, 2019-05-15, 2019-05-19.
           (displayln "<textarea name='answer' rows='10' cols='40'>")
           (displayln "(time (argmax first (colatz-range (range 1 1000000))))")
           (displayln "</textarea></p>")
-          (displayln "<p><input type='submit'></p>")
+          (displayln "<p><input type='submit' class='btn btn-primary'></p>")
           (displayln "</form>"))))))
 
 (post "/submit"
