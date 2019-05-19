@@ -3,7 +3,7 @@
 
 (require db racket/system (planet dmac/spin))
 
-(define VERSION "0.3.6")
+(define VERSION "0.3.7")
 
 ;;CHANGE
 (define DB
@@ -102,13 +102,13 @@ programmed by hkimura, 2019-05-15, 2019-05-19.
      (with-output-to-string
        (lambda ()
          (let ((num 0))
-           (displayln "<div class='table-responsive")
+           (displayln "<div class='table-responsive'>")
            (displayln "<table class='table table-striped'>")
-           (displayln "<tr><td></td><td>user</td><td>msec</td><td>upload</td>")
+           (displayln "<tr><td></td><td>user</td><td>msec</td><td>upload</td></tr>")
            (for ([ans (answers)])
              (displayln
               (format
-               "<tr><td>~a</td><td>~a</td><td stlye='width:6em; text-align:right'>~a</td><td><a href='/show/~a'>~a</a></td>"
+               "<tr><td>~a</td><td>~a</td><td stlye='width:6em; text-align:right'>~a</td><td><a href='/show/~a'>~a</a></td></tr>"
                (inc num)
                (vector-ref ans 3)
                (vector-ref ans 4)

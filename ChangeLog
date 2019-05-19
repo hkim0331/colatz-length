@@ -1,6 +1,7 @@
 2019-05-19  Hiroshi Kimura  <hiroshi.kimura.0331@gmail.com>
-	* 0.3.6
-	Bootstrap
+
+	* 0.3.7, 0.3.6
+	Bootstrap. table responsive
 
 	* 0.3.3
 	try deploying on vm2019.

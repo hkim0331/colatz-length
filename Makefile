@@ -16,10 +16,13 @@ install: colatz.rkt
 	sed -i.bak -e "s|href='/|href='/ch/|g" \
 		-e "s|action='/|action='/ch/|g" ${DEST}/colatz.rkt
 
-run: install
+start: install
 	racket ${DEST}/colatz.rkt
 
 stop:
+	kill `lsof -i:8002 | grep 8002 | awk '{print $2}'`
+
+restart: stop start
 
 clean:
 	${RM} *~ *.bak
