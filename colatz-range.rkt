@@ -3,7 +3,7 @@
 
 (require db racket/system (planet dmac/spin))
 
-(define VERSION "0.1")
+(define VERSION "0.2")
 
 ;;CHANGE
 (define DB "/Users/hkim/ramdisk/colatz-range-ranks/colatz-range.db")
