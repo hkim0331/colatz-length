@@ -126,7 +126,7 @@ programmed by hkimura, 2019-05-15, 2019-05-19.
           (displayln "<form method='post' action='/submit'>")
           (displayln "<p>name <input name='user'></p>")
           (displayln "<p>password <input name='password' type='password'></p>")
-          (displayln "<p>your answer:関数を colayz-range として定義し、<br>")
+          (displayln "<p>your answer:関数を colatz-range として定義し、<br>")
           (displayln "最後に (time (argmax ...) の計測プログラムを入れてください。</p>")
           (displayln "<textarea name='answer' rows='10' cols='40'>")
           (displayln "(time (argmax first (colatz-range (range 1 1000000))))")
@@ -144,8 +144,8 @@ programmed by hkimura, 2019-05-15, 2019-05-19.
                (msec (try answer)))
           (if msec
             (begin
-            (insert user answer msec)
-            (format "<p>thank you. see the <a href='/'>results</a>.</p>"))
+              (insert user answer msec)
+              (format "<p>thank you. see the <a href='/'>results</a>.</p>"))
             (error "check your answer")))))))
 
 (get "/show/:id"
@@ -154,7 +154,7 @@ programmed by hkimura, 2019-05-15, 2019-05-19.
          (html
           (with-output-to-string
             (lambda ()
-              (display (format "<pre>~a</pre>" (vector-ref ans 6)))))))))
+              (display (format "<pre><code>~a</code></pre>" (vector-ref ans 6)))))))))
 
 (displayln "server starts at port 8002")
 (run #:listen-ip #f #:port 8002)
