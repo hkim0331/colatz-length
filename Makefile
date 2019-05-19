@@ -19,4 +19,4 @@ install: colatz-length.rkt
 #	raco exe $^
 
 clean:
-	${RM} *~ colatz-range
+	${RM} *~ *.bak

@@ -1,14 +1,19 @@
-* [0.3] 2019-05-19 start to work on tminit.local
-  let's deploy on vm2019.
+2019-05-19  Hiroshi Kimura  <hiroshi.kimura.0331@gmail.com>
 
-* [0.2] 2019-05-19 time to move linux
-  start to work on macos.
-    * can upload answers.
-    * can launch answers.
-    * can retrieve 'time' outputs.
-  output format may differ from macos to linux.
-  time to move linux.
+	* [0.3.2] 2019-05-19 rename project name as colatz-length
+	rename remote repository also as
+	https://github.com/hkim0331/colatz-length.git
 
-* [0.1] 2019-05-19 restart developing
-    * https://github.com/hkim0331/colatz-range-ranks.git
+	* [0.3] 2019-05-19 start to work on tminit.local. Let's deploy on vm2019.
+
+	* [0.2] 2019-05-19 time to move linux.start to work on macos.
+		* can upload answers.
+		* can launch answers.
+		* can retrieve 'time' outputs.
+		output format may differ from macos to linux.
+		time to move linux.
+
+	* [0.1] 2019-05-19 restart developing
+
+	* https://github.com/hkim0331/colatz-range-ranks.git
 
