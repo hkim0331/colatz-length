@@ -3,11 +3,13 @@
 
 (require db (planet dmac/spin))
 
-(define *db* (sqlite3-connect #:database "colatz-range.db"))
+(define VERSION "0.1")
+
+(define db (sqlite3-connect #:database "colatz-range.db"))
 
 (define (auth? user password)
   (query-maybe-value 
-    *db*
+    db
     "select id from users where user=$1 and password=$2" user password))
 
 (define header
