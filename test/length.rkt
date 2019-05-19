@@ -17,4 +17,3 @@
 (time (argmax first (colatz-range 1000000)))
 ;;cpu time: 1712 real time: 1713 gc time: 565
 ;;'(525 837799)
-
