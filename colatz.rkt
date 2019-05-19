@@ -10,9 +10,9 @@
   (first 
     (filter 
       file-exists? 
-      '("/Users/hkim/ramdisk/colatz-range-ranks/colatz-range.db"
-        "/home/hkim/ramdisk/colatz-range-ranks/colatz-range.db"
-        "/opt/colatz-range-ranks/colatz-range.db"))))
+      '("/Users/hkim/ramdisk/colatz-length/colatz.db"
+        "/home/hkim/ramdisk/colatz-length/colatz.db"
+        "/srv/colatz-hkim/colatz.db"))))
 
 (define db (sqlite3-connect #:database DB))
 
