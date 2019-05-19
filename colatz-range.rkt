@@ -66,19 +66,25 @@ programmed by hkimura, 2019-05-15, 2019-05-19.
 
 ;; return msec or #f
 (define (save s)
-  #t)
+  (let ((fname "/tmp/colatz.rkt"))
+    (with-output-to-file fname
+      (lambda ()
+        (displayln s)))
+    fname))
 
 (define (try answer)
-  (with-output-to-string
-    (lambda ()
-      (system (format "time racket ~a") (save answer)))))
+  (let* ((fname (save answer))
+         (s (with-output-to-string
+             (lambda ()
+               (system (format "time racket ~a" fname))))))
+        (system (format "rm -f ~a" fname))
+        s))
 
 ;;FIXME データベースから解答をリストする
 (define-syntax-rule (inc n)
   (let ()
     (set! n (+ 1 n))
     n))
-
 (get "/"
   (lambda (req)
     (html
