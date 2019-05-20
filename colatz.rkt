@@ -107,6 +107,8 @@ programmed by hkimura, 2019-05-15, 2019-05-19.
      (with-output-to-string
        (lambda ()
          (let ((num 0))
+           (displayln "<p>1 ~ 1,000,000 の整数のうちコラッツ列を最長とする n を")
+           (displayln "出来るだけ短い時間で求めよ。PE14 と被ったのはたまたまです。</p>")
            (displayln "<div class='table-responsive'>")
            (displayln "<table class='table table-striped'>")
            (displayln "<tr><td></td><td>user</td><td>msec</td><td>upload</td></tr>")
