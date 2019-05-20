@@ -3,7 +3,7 @@
 
 (require db racket/system net/ldap (planet dmac/spin))
 
-(define VERSION "0.3.7")
+(define VERSION "0.3.8")
 
 ;;CHANGE
 (define DB
