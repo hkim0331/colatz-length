@@ -1,7 +1,13 @@
+2019-05-20  Hiroshi Kimura  <hiroshi.kimura.0331@gmail.com>
+
+	* 0.3.8
+	LDAP auth.
+	table users is dropped.
+
 2019-05-19  Hiroshi Kimura  <hiroshi.kimura.0331@gmail.com>
 
 	* 0.3.7, 0.3.6
-	Bootstrap. table responsive
+	Bootstrap. table responsive.
 
 	* 0.3.3
 	try deploying on vm2019.

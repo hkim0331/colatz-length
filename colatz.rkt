@@ -1,25 +1,30 @@
 #!/usr/bin/env racket
 #lang racket
 
-(require db racket/system (planet dmac/spin))
+(require db racket/system net/ldap (planet dmac/spin))
 
-(define VERSION "0.3.7")
+(define VERSION "0.3.8")
 
 ;;CHANGE
 (define DB
   (first
     (filter
       file-exists?
-      '("/Users/hkim/ramdisk/colatz-length/colatz.db"
-        "/home/hkim/ramdisk/colatz-length/colatz.db"
-        "/srv/colatz-hkim/colatz.db"))))
+      `("/srv/colatz-hkim/colatz.db"
+        ,(format "~a/colatz.db" (getenv "PWD"))))))
 
 (define db (sqlite3-connect #:database DB))
 
+;; (define (auth? user password)
+;;   (query-maybe-value
+;;     db
+;;     "select id from users where user=$1 and password=$2" user password))
+
 (define (auth? user password)
-  (query-maybe-value
-    db
-    "select id from users where user=$1 and password=$2" user password))
+  (ldap-authenticate "150.69.90.46"
+                     389
+                     (format "cn=~a,ou=People,dc=local" user)
+                     password))
 
 (define (insert user answer msec)
   (query-exec
